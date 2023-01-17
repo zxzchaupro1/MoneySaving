@@ -8,6 +8,10 @@ require("dotenv").config();
 const connection = require("./database/mysqlDatabase");
 
 const app = express();
+// Middlewares
+app.use(bodyParser.json());
+app.use(cors());
+
 
 // database init
 function mysqlConnect() {
@@ -34,17 +38,21 @@ mysqlConnect();
 // Routes
 const thongTinNguoiDung = require("./routes/dangKy");
 const dangnhap = require("./routes/dangnhap");
+const danhSachChi = require("./routes/danhSachChi");
+const danhSachThu = require("./routes/danhSachThu");
+const danhSachTietKiem = require("./routes/danhSachTietKiem");
 
 // Middlewares
-app.use(bodyParser.json());
-app.use(cors());
+app.use("/api", danhSachChi);
+app.use("/api", danhSachThu);
+app.use("/api", danhSachTietKiem);
 
 // Routes
-app.use("/api", dangnhap);
+// app.use("/api", dangnhap);
 
 
 // PORT
-const port = process.env.PORT || 3000;
+const port = 3003;
 
 // Starting a server
 app.listen(port, () => {
